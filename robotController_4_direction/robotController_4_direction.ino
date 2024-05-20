@@ -69,17 +69,6 @@ void setup() {
   digitalWrite(LED, HIGH);
   delay(1000);
   digitalWrite(LED, LOW);
-  // Put snake in starting position
-  // s1.write(90 + offset + amplitude * cos(5 * lag));
-  // s2.write(90 + offset + amplitude * cos(4 * lag));
-  // s3.write(90 + offset + amplitude * cos(3 * lag));
-  // s4.write(90 + amplitude * cos(2 * lag));
-  // s5.write(90 + amplitude * cos(1 * lag));
-  // s6.write(90 + amplitude * cos(0 * lag));
-  // s7.write(90 + amplitude * cos(-1 * lag));
-  // s8.write(90 + amplitude * cos(-2 * lag));
-  // s9.write(90 + amplitude * cos(-3 * lag));
-  // s10.write(90 + amplitude * cos(-4 * lag));
 
   delay(startPause);  // Pause to position robot
   digitalWrite(LED, HIGH);
@@ -138,6 +127,18 @@ void loop() {
     // Left turn
     if (com == 'l') {
       leftMove();
+    }
+    if (com == 'A') {
+      amplitude = val;
+    }
+    if (com == 'D') {
+      delayTime = val;
+    }
+    if (com == 'R') {
+      rightOffset = val;
+    }
+    if (com == 'L') {
+      leftOffset = val;
     }
   }
 }
