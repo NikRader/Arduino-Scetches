@@ -1,3 +1,4 @@
+
 /*
 Remote control file for serpentine motion
 of a snake robot with 10 servos
@@ -32,11 +33,11 @@ Servo s10;
 int counter = 0;        // Loop counter variable
 float lag = .5712;      // Phase lag between segments
 int frequency = 1;      // Oscillation frequency of segments.
-int amplitude = 40;     // Amplitude of the serpentine motion of the snake
-int rightOffset = 5;    // Right turn offset
-int leftOffset = -10;   // Left turn offset
+int amplitude = 45;     // Amplitude of the serpentine motion of the snake
+int rightOffset = 0;    // Right turn offset
+int leftOffset = 0;   // Left turn offset
 int offset = 6;         // Variable to correct servos that are not exactly centered
-int delayTime = 6;      // Delay between limb movements
+int delayTime = 4;      // Delay between limb movements
 int startPause = 1500;  // Delay time to position robot
 int test = -3;          // Test varialble takes values from -6 to +5
 
