@@ -1,14 +1,7 @@
-
-/*
-Remote control file for serpentine motion
-of a snake robot with 10 servos
-*/
-
 #include <driver/adc.h>
 #include <ESP32Servo.h>
 #include "BluetoothSerial.h"  //Header File for Serial Bluetooth, will be added by default into Arduino
 BluetoothSerial SerialBT;     //Object for Bluetooth
-
 
 // The potentiometer is connected to GPIO36 (Pin VP)
 const int batPin = 36;
@@ -35,7 +28,7 @@ float lag = .5712;      // Phase lag between segments
 int frequency = 1;      // Oscillation frequency of segments.
 int amplitude = 45;     // Amplitude of the serpentine motion of the snake
 int rightOffset = 0;    // Right turn offset
-int leftOffset = 0;   // Left turn offset
+int leftOffset = 0;     // Left turn offset
 int offset = 6;         // Variable to correct servos that are not exactly centered
 int delayTime = 4;      // Delay between limb movements
 int startPause = 1500;  // Delay time to position robot
@@ -46,6 +39,7 @@ void setup() {
 
   //pinMode(batPin,INPUT_PULLUP);
   Serial.begin(9600);        //Start Serial monitor in 9600
+                             // SerialBT.begin(9600);
   Serial.setTimeout(100);    // Прием сообщения за 100 мс
   SerialBT.setTimeout(100);  // Прием сообщения за 100 мс
   SerialBT.begin("ESP_32");  //Name of your Bluetooth Signal
@@ -86,14 +80,31 @@ void setup() {
 
 void loop() {
   delay(20);
+  // Measures the value of the potentiometer
 
-  count = 1;
-  digitalWrite(LED, HIGH);
-  delay(20);
-  digitalWrite(LED, LOW);
+  batValue = adc1_get_raw(ADC1_CHANNEL_0);
+  if (count == 200) {
+    int bat_send = 100 * (oldbatValue * 3.75 / 4096) * (11943 + 2344) / 2344;
 
+    char charArray[10];                  // Создаем символьный массив для хранения значения типа int
+    sprintf(charArray, "%d", bat_send);  // Преобразуем int в строку
+    String res = String(charArray);      // Создаем объект String из символьного массива
+    SerialBT.println(res);
+    Serial.println(res);
+    count = 1;
+    digitalWrite(LED, HIGH);
+    delay(20);
+    digitalWrite(LED, LOW);
+  } else {
+    count++;
+    oldbatValue = (10 * oldbatValue + batValue) / 11;
+  }
+  // yield();
+
+
+  
   if (Serial.available()) {
-    SerialBT.print(Serial.readString());
+    //SerialBT.print(Serial.parseInt());
   }
   // Сообщение на esp от Android
   if (SerialBT.available() > 1) {
@@ -142,6 +153,7 @@ void loop() {
     }
   }
 }
+
 void setStartPosition() {
   s1.write(90 + offset + amplitude * cos(5 * lag));
   s2.write(90 + offset + amplitude * cos(4 * lag));
