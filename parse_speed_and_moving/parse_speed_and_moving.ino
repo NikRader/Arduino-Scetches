@@ -43,7 +43,7 @@ void forwardMove() {
   startTime = millis();
   for (counter = 0; counter < 360; counter += 1) {
     delay(delayTime);
-    
+
     servos[0].write(90 + offset + amplitude * cos(frequency * counter * 3.14159 / 180 + 5 * lag));
     servos[1].write(90 + offset + amplitude * cos(frequency * counter * 3.14159 / 180 + 4 * lag));
     servos[2].write(90 + offset + amplitude * cos(frequency * counter * 3.14159 / 180 + 3 * lag));
