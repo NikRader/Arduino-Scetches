@@ -173,20 +173,20 @@ void forwardMove() {
     servos[7].write(90 + amplitude * cos(frequency * counter * 3.14159 / 180 - 2 * lag));
     servos[8].write(90 + amplitude * cos(frequency * counter * 3.14159 / 180 - 3 * lag));
     servos[9].write(90 + amplitude * cos(frequency * counter * 3.14159 / 180 - 4 * lag));
-    String send = "I";
-    String iter_num = int_to_string(counter);
-    send += iter_num;
-    send += ":";
-    if (counter < 360) {
-      for (int j = 0; j < 10; j++) {
-        send += add_servo_inf(j);
-      }
-      SerialBT.println(send);
-      Serial.println(send);
+    // String send = "I";
+    // String iter_num = int_to_string(counter);
+    // send += iter_num;
+    // send += ":";
+    // if (counter < 360) {
+    //   for (int j = 0; j < 10; j++) {
+    //     send += add_servo_inf(j);
+    //   }
+    //   SerialBT.println(send);
+    //   Serial.println(send);
       
-    } else {
-      break;
-    }
+    // } else {
+    //   break;
+    // }
   }
 }
 void reverseMove() {
